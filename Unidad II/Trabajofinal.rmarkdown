@@ -163,9 +163,8 @@ alpha=1 es lasso y 0 es ridge
 
 
 ```{r}
+#Semilla
 
-
-#Fijamos la semilla y la muestra
 set.seed(123456789)
 trControl <- trainControl(method = 'cv', number = 10)
 n  <- nrow(datos)
@@ -178,6 +177,7 @@ test <- lapply(datos.lista, function(x) x[-idx,])
 
 
 #REGRESION LOGISTICA LINEAL
+
 set.seed(123456789)
 myfnlog <- function(x) train(clase ~ ., data = x, method = "multinom", trControl = trControl, trace = F)
 logistica.lista <- lapply(entrenamiento,myfnlog)
@@ -230,6 +230,7 @@ for(l in 1:length(datos.lista)){
 names(accuracy) <- names(datos.lista)
 accuracy_lasso <- accuracy
 print(accuracy_lasso)
+
 #KNN
 
 
