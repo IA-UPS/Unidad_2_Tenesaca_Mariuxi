@@ -212,5 +212,9 @@ for(l in 1:length(datos.lista)){
 names(accuracy) <- names(datos.lista)
 accuracy_lasso <- accuracy
 print(accuracy_lasso)
+#KNN
 
+
+
+#BAYES
 ```
