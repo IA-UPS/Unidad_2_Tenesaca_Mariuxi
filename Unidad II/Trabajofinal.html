@@ -326,38 +326,42 @@ Using clase as id variables</code></pre>
 <h3 class="anchored" data-anchor-id="regresión-logística">Regresión logística</h3>
 <p>alpha=1 es lasso y 0 es ridge</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fijamos la semilla y la muestra</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>trControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">'cv'</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n,<span class="at">size=</span>n<span class="sc">*</span><span class="fl">0.7</span>,<span class="at">replace=</span>F)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>lambda_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="do">### para conjunto de datos podemos realizar el split</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>entrenamiento <span class="ot">&lt;-</span> <span class="fu">lapply</span>(datos.lista, <span class="cf">function</span>(x) x[idx,])</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">lapply</span>(datos.lista, <span class="cf">function</span>(x) x[<span class="sc">-</span>idx,])</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Semilla</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>trControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">'cv'</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n,<span class="at">size=</span>n<span class="sc">*</span><span class="fl">0.7</span>,<span class="at">replace=</span>F)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>lambda_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="do">### para conjunto de datos podemos realizar el split</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>entrenamiento <span class="ot">&lt;-</span> <span class="fu">lapply</span>(datos.lista, <span class="cf">function</span>(x) x[idx,])</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">lapply</span>(datos.lista, <span class="cf">function</span>(x) x[<span class="sc">-</span>idx,])</span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">#REGRESION LOGISTICA LINEAL</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>myfnlog <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"multinom"</span>, <span class="at">trControl =</span> trControl, <span class="at">trace =</span> F)</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,myfnlog)</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>logisita.pred <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  logisita.pred[[l]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistica.lista[[l]],test[[l]])</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(logisita.pred) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>accuracy_logis<span class="ot">&lt;-</span>accuracy</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_logis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#REGRESION LOGISTICA LINEAL</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>myfnlog <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"multinom"</span>, <span class="at">trControl =</span> trControl, <span class="at">trace =</span> F)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,myfnlog)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>logisita.pred <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  logisita.pred[[l]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistica.lista[[l]],test[[l]])</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(logisita.pred) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>accuracy_logis<span class="ot">&lt;-</span>accuracy</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_logis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5919283 0.5964126 0.5919283 0.5941704 0.5919283 </code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RIDGE</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>myfnridge <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
@@ -578,6 +582,8 @@ multinomial or binomial class has fewer than 8 observations; dangerous ground</c
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5941704 0.5941704 0.5941704 0.5941704 0.5941704 </code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#LASSO</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>myfnlasso <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">1</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
@@ -798,11 +804,12 @@ multinomial or binomial class has fewer than 8 observations; dangerous ground</c
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KNN</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#BAYES</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KNN</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BAYES</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

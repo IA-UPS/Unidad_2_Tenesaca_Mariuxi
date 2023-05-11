@@ -177,6 +177,9 @@ accuracy_logis<-accuracy
 print(accuracy_logis)
 
 
+```
+
+```{r}
 #RIDGE
 set.seed(123456789)
 myfnridge <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=0,lambda=lambda_seq), trace = F)
@@ -195,6 +198,10 @@ names(accuracy) <- names(datos.lista)
 accuracy_ridge <- accuracy
 print(accuracy_ridge)
 
+
+```
+
+```{r}
 #LASSO
 set.seed(123456789)
 myfnlasso <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=1,lambda=lambda_seq), trace = F)
@@ -213,9 +220,16 @@ names(accuracy) <- names(datos.lista)
 accuracy_lasso <- accuracy
 print(accuracy_lasso)
 
+```
+
+```{r}
 #KNN
 
 
 
+```
+
+```{r}
 #BAYES
+
 ```
