@@ -1,0 +1,38 @@
+---
+title: "INVESTIGACIÓN REDES BAYESIANAS"
+format: html
+editor: visual
+author: "Mariuxi Maribel Tenesaca Yuqui"
+---
+
+## **Introducción teórica**
+
+Previo a la explicar de que se trata las redes bayesianas es necesario contemplar los siguientes conceptos de teoría de grafos y teoría de la probabilidad.
+
+### **Conceptos básicos**
+
+**Arco**: Es un par ordenado (X, Y). En una representación gráfica, el un arco (X,Y) se indica mediante una flecha de X a Y.
+
+**Grafo dirigido:** Es un par *G* = (*N*, *A*) donde *N* es un conjunto de nodos y *A* un conjunto de arcos definidos sobre los nodos.
+
+**Grafo no dirigido**: Es un par *G* = (*N*,*A*) donde *N* es un conjunto de nodos y *A* un conjunto de arcos no orientados (es decir, pares no ordenados (*X*,*Y*)) definidos sobre los nodos.
+
+**Camino**: Es una secuencia ordenada de nodos (*X~i~1*, .. , *X~i~r*) tal que " *j* = 1, \..., *r*-1.
+
+**Camino dirigido**: Es una secuencia ordenada de nodos (*X~i~1*, \..., *X~i~r*) tal que para todo *j* = 1, \..., *r*-1 el arco *X~j~* ® *X~j+1~* Î *A*.
+
+**Ciclo:** Es un camino no dirigido que empieza y termina en el mismo nodo X.
+
+**Grafo acíclico:** Es un grafo que no contiene ciclos.
+
+**Padre:** *X* es un *padre* de *Y* si y sólo si existe un arco *X* ® *Y*. Se dice también que *Y* es hijo de X.
+
+**Antepasado o ascendiente**. *X* es un *antepasado* o ascendiente de *Z* si y sólo si existe un camino dirigido de *X* a *Z*.
+
+**Conjunto ancestral** **de un nodo *X:*** Es un conjunto que contiene a *X* y a todos sus antepasados.
+
+**Descendiente:** *Z* es un *descendiente* de *X* si y sólo si *X* es un antepasado de *Z*. Al conjunto de los descendientes de *X* se denotará por *de(X)*.
+
+**Variable proposicional**: Es una variable aleatoria que toma un conjunto exhaustivo y excluyente de valores.
+
+### **Definición Redes Bayesianas** 
