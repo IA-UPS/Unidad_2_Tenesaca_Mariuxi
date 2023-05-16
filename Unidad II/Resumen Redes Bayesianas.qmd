@@ -35,4 +35,6 @@ Previo a la explicar de que se trata las redes bayesianas es necesario contempla
 
 **Variable proposicional**: Es una variable aleatoria que toma un conjunto exhaustivo y excluyente de valores.
 
+**Los nodos de una red bayesiana**:  Deben ser variables proposicionales (toman un conjunto exhaustivo y excluyente de valores).
+
 ### **Definición Redes Bayesianas** 
