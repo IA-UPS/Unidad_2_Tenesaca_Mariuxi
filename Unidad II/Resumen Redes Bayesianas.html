@@ -69,25 +69,90 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introducción-teórica" class="level2">
 <h2 class="anchored" data-anchor-id="introducción-teórica"><strong>Introducción teórica</strong></h2>
-<p>Previo a la explicar de que se trata las redes bayesianas es necesario contemplar los siguientes conceptos de teoría de grafos y teoría de la probabilidad.</p>
+<p>Una red bayesiana es un modelo que agrega los efectos entre los atributos del dominio y los pondera utilizando una distribución de probabilidad. Un estado entre diferentes pares de variables que se pueden conectar en una relación padre-hijo en un gráfico acíclico dirigido [1].</p>
+<p>Las redes bayesianas representan relaciones tanto estructurales como cuantitativas. El principal interés de estos modelos es que permiten utilizar la misma representación tanto para operaciones de predicción como de explicación.</p>
+<p>Los métodos de construcción de redes bayesianas pueden basarse en las propiedades de independencia condicional de diferentes estructuras o teniendo en cuenta las propiedades de distribución implícitas de cada estructura.</p>
+<p>Los métodos basados ​​en propiedades de distribución se dividen además en métodos basados ​​en información, métodos bayesianos y métodos basados ​​en principios MDL. Las redes que funcionan con principios similares a los clasificadores bayesianos “ingenuos” también se pueden utilizar para la clasificación [1].</p>
 <section id="conceptos-básicos" class="level3">
 <h3 class="anchored" data-anchor-id="conceptos-básicos"><strong>Conceptos básicos</strong></h3>
-<p><strong>Arco</strong>: Es un par ordenado (X, Y). En una representación gráfica, el un arco (X,Y) se indica mediante una flecha de X a Y.</p>
+<p>Previo a la explicar de que se trata las redes bayesianas es necesario contemplar los siguientes conceptos de teoría de grafos y teoría de la probabilidad.</p>
+<p><strong>Arco</strong>: Es un par ordenado (X, Y).</p>
+<ul>
+<li>El un arco (X,Y) se indica mediante una flecha de X a Y.</li>
+</ul>
 <p><strong>Grafo dirigido:</strong> Es un par <em>G</em> = (<em>N</em>, <em>A</em>) donde <em>N</em> es un conjunto de nodos y <em>A</em> un conjunto de arcos definidos sobre los nodos.</p>
 <p><strong>Grafo no dirigido</strong>: Es un par <em>G</em> = (<em>N</em>,<em>A</em>) donde <em>N</em> es un conjunto de nodos y <em>A</em> un conjunto de arcos no orientados (es decir, pares no ordenados (<em>X</em>,<em>Y</em>)) definidos sobre los nodos.</p>
 <p><strong>Camino</strong>: Es una secuencia ordenada de nodos (<em>X<sub>i</sub>1</em>, .. , <em>X<sub>i</sub>r</em>) tal que ” <em>j</em> = 1, ..., <em>r</em>-1.</p>
-<p><strong>Camino dirigido</strong>: Es una secuencia ordenada de nodos (<em>X<sub>i</sub>1</em>, ..., <em>X<sub>i</sub>r</em>) tal que para todo <em>j</em> = 1, ..., <em>r</em>-1 el arco <em>X<sub>j</sub></em> ® <em>X<sub>j+1</sub></em> Î <em>A</em>.</p>
 <p><strong>Ciclo:</strong> Es un camino no dirigido que empieza y termina en el mismo nodo X.</p>
 <p><strong>Grafo acíclico:</strong> Es un grafo que no contiene ciclos.</p>
 <p><strong>Padre:</strong> <em>X</em> es un <em>padre</em> de <em>Y</em> si y sólo si existe un arco <em>X</em> ® <em>Y</em>. Se dice también que <em>Y</em> es hijo de X.</p>
 <p><strong>Antepasado o ascendiente</strong>. <em>X</em> es un <em>antepasado</em> o ascendiente de <em>Z</em> si y sólo si existe un camino dirigido de <em>X</em> a <em>Z</em>.</p>
 <p><strong>Conjunto ancestral</strong> <strong>de un nodo <em>X:</em></strong> Es un conjunto que contiene a <em>X</em> y a todos sus antepasados.</p>
-<p><strong>Descendiente:</strong> <em>Z</em> es un <em>descendiente</em> de <em>X</em> si y sólo si <em>X</em> es un antepasado de <em>Z</em>. Al conjunto de los descendientes de <em>X</em> se denotará por <em>de(X)</em>.</p>
+<p><strong>Descendiente:</strong> <em>Z</em> es un <em>descendiente</em> de <em>X</em> si y sólo si <em>X</em> es un antepasado de <em>Z</em>.</p>
+<ul>
+<li>Al conjunto de los descendientes de <em>X</em> se denotará por <em>de(X)</em>.</li>
+</ul>
 <p><strong>Variable proposicional</strong>: Es una variable aleatoria que toma un conjunto exhaustivo y excluyente de valores.</p>
-<p><strong>Los nodos de una red bayesiana</strong>: &nbsp;Deben ser variables proposicionales (toman un conjunto exhaustivo y excluyente de valores).</p>
+<p><strong>Los nodos de una red bayesiana</strong>: Deben ser variables proposicionales (toman un conjunto exhaustivo y excluyente de valores).</p>
 </section>
 <section id="definición-redes-bayesianas" class="level3">
 <h3 class="anchored" data-anchor-id="definición-redes-bayesianas"><strong>Definición Redes Bayesianas</strong></h3>
+<p>Una red bayesiana es una representación gráfica de dependencias para razonamiento probabilístico, donde los nodos representan variables aleatorias y los círculos representan dependencias directas entre variables.</p>
+<p><strong>Por lo tanto, una red bayesiana es:</strong></p>
+<ul>
+<li><p>Un conjunto de variables proposicionales, V.</p></li>
+<li><p>Un conjunto de relaciones binarias definida sobre las variables de V, E.</p></li>
+<li><p>Una distribución de probabilidad conjunta sobre las variables de V.</p></li>
+</ul>
+<p>Basado en esta idea, las redes bayesianas (o redes de creencias) son una forma práctica y compacta de representar el conocimiento difuso.</p>
+<ul>
+<li>Una red bayesiana es un gráfico dirigido acíclico que consta de:</li>
+</ul>
+<ol type="1">
+<li><p>Un conjunto de nodos, uno por cada variable aleatoria “en el mundo”.</p></li>
+<li><p>Un conjunto de arcos dirigidos que conectan nodos; si hay un arco de X a Y, decimos que X es padre de Y (padre(X) significa el conjunto de v.a.s que son padres de X).</p></li>
+<li><p>Cada nodo Xi contiene una distribución de probabilidad condicional P(Xi|parents(Xi)).</p></li>
+<li><p>Intuitivamente, el arco entre X e Y representa una red bayesiana con efecto directo de X sobre Y.</p></li>
+<li><p>Determinar las dependencias inmediatas (es decir, la topología de la red) es tarea del experto en el dominio.</p></li>
+</ol>
+<p><strong>Las Redes Bayesianas constan de:</strong></p>
+<p>La parte cualitativa describe las relaciones entre las diferentes variables.</p>
+<p>La parte cuantitativa de la fuerza de estas relaciones se describe utilizando probabilidades condicionales.</p>
+<section id="ejemplo" class="level4">
+<h4 class="anchored" data-anchor-id="ejemplo"><strong>Ejemplo</strong></h4>
+<p><strong>Red Bayesiana (Russell y Norvig)</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/uno.png" class="img-fluid figure-img" width="377"></p>
+<p></p><figcaption class="figure-caption">Figura 1. Ejemplo red bayesiana Russell y Norvig [2]</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Descripción</strong></p>
+<ul>
+<li><p>La caries dental es la causa directa del dolor y las caries</p></li>
+<li><p>Considerando que la caries, el dolor y el espacio son condicionalmente independientes</p></li>
+<li><p>El tiempo es independiente de otras variables.</p></li>
+<li><p>No es necesario indicar la probabilidad de caries, negación del dolor.</p></li>
+</ul>
+<p><strong>Ejemplos de aplicaciones de RB en empresas:</strong></p>
+<p><em>Microsoft</em><br>
+• Answer Wizard (Office)<br>
+• Diagnóstico de problemas de usuario (Aladdin)<br>
+• Home Health en la red de Microsoft (MSN)<br>
+<em>Intel</em><br>
+• Diagnóstico de fallos de procesadores<br>
+<em>HP</em><br>
+• Diagnóstico de problemas de impresora<br>
+<em>Nokia</em><br>
+• Diagnóstico de redes celulares<br>
+<em>Nasa</em><br>
+• Sistema de ayuda a la decisión en misiones espaciales</p>
+<p><strong>Referencias Bibliográficas</strong></p>
+<p>[1] R. S. i. Solé, “Redes bayesianas”, <em>Uoc.edu</em>. [En línea]. Disponible en: https://openaccess.uoc.edu/bitstream/10609/138187/26/Data%20mining_M%C3%B3dulo%207_Redes%20bayesianas.pdf. [Consultado: 19-may-2023]</p>
+<p>[2] J. L. Ruiz Reina, “Tema 8: Introducción a las Redes Bayesianas”, <em>Cs.us.es</em>. [En línea]. Disponible en: https://www.cs.us.es/cursos/ia2-2005/temas/tema-08.pdf. [Consultado: 19-may-2023].</p>
+<p>[3] “Redes Bayesianas”, <em>Ull.es</em>. [En línea]. Disponible en: https://fdoperez.webs.ull.es/doc/Conocimiento5.pdf. [Consultado: 20-may-2023].</p>
+<p>[4] L. R. B. no T. M. S. Q. P. I. C. de Dos variables y y. un A. D. la P. H. la segunda., “Ejemplo 1. La red bayesiana más simple”, <em>Uma.es</em>. [En línea]. Disponible en: http://www.lcc.uma.es/~eva/aic/Redes%20Bayesianas.pdf. [Consultado: 20-may-2023].</p>
+</section>
 </section>
 </section>
 

@@ -112,10 +112,10 @@ La parte cuantitativa de la fuerza de estas relaciones se describe utilizando pr
 
 **Referencias Bibliográficas**
 
-\[1\] R. S. i. Solé, \"Redes bayesianas\", *Uoc.edu*. \[En línea\]. Disponible en: https://openaccess.uoc.edu/bitstream/10609/138187/26/Data%20mining_M%C3%B3dulo%207_Redes%20bayesianas.pdf. \[Consultado: 19-may-2023\]
+\[1\] R. S. i. Solé, "Redes bayesianas", *Uoc.edu*. \[En línea\]. Disponible en: https://openaccess.uoc.edu/bitstream/10609/138187/26/Data%20mining_M%C3%B3dulo%207_Redes%20bayesianas.pdf. \[Consultado: 19-may-2023\]
 
-\[2\] J. L. Ruiz Reina, \"Tema 8: Introducción a las Redes Bayesianas\", *Cs.us.es*. \[En línea\]. Disponible en: https://www.cs.us.es/cursos/ia2-2005/temas/tema-08.pdf. \[Consultado: 19-may-2023\].
+\[2\] J. L. Ruiz Reina, "Tema 8: Introducción a las Redes Bayesianas", *Cs.us.es*. \[En línea\]. Disponible en: https://www.cs.us.es/cursos/ia2-2005/temas/tema-08.pdf. \[Consultado: 19-may-2023\].
 
-\[3\] \"Redes Bayesianas\", *Ull.es*. \[En línea\]. Disponible en: https://fdoperez.webs.ull.es/doc/Conocimiento5.pdf. \[Consultado: 20-may-2023\].
+\[3\] "Redes Bayesianas", *Ull.es*. \[En línea\]. Disponible en: https://fdoperez.webs.ull.es/doc/Conocimiento5.pdf. \[Consultado: 20-may-2023\].
 
-\[4\] L. R. B. no T. M. S. Q. P. I. C. de Dos variables y y. un A. D. la P. H. la segunda., \"Ejemplo 1. La red bayesiana más simple\", *Uma.es*. \[En línea\]. Disponible en: http://www.lcc.uma.es/\~eva/aic/Redes%20Bayesianas.pdf. \[Consultado: 20-may-2023\].
+\[4\] L. R. B. no T. M. S. Q. P. I. C. de Dos variables y y. un A. D. la P. H. la segunda., "Ejemplo 1. La red bayesiana más simple", *Uma.es*. \[En línea\]. Disponible en: http://www.lcc.uma.es/\~eva/aic/Redes%20Bayesianas.pdf. \[Consultado: 20-may-2023\].
