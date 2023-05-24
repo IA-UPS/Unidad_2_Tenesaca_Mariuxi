@@ -186,19 +186,20 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>datos.numericos <span class="ot">&lt;-</span> datos[, <span class="fu">which</span>(<span class="fu">unlist</span>(<span class="fu">lapply</span>(datos, is.numeric)))]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>clase <span class="ot">&lt;-</span> datos<span class="sc">$</span>V10 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>V10)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(datos.numericos) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Var"</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>))</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">### procedemos a crear una lista con todas las transformaciones</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>datos.lista <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">raw =</span> <span class="fu">bind_cols</span>(datos.numericos,<span class="at">clase=</span>clase),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">zscore =</span> <span class="fu">bind_cols</span>(<span class="fu">zscore</span>(datos.numericos),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">clase =</span> clase),</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">l2 =</span> <span class="fu">bind_cols</span>(<span class="fu">l2</span>(datos.numericos), <span class="at">clase =</span> clase),</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">media =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max.mean</span>(datos.numericos), <span class="at">clase =</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                      clase),</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediana =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max.median</span>(datos.numericos), <span class="at">clase =</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                        clase),</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_max =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max</span>(datos.numericos),</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">clase =</span> clase))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">### procedemos a crear una lista con todas las transformaciones</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>datos.lista <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">raw =</span> <span class="fu">bind_cols</span>(datos.numericos,<span class="at">clase=</span>clase),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">zscore =</span> <span class="fu">bind_cols</span>(<span class="fu">zscore</span>(datos.numericos),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">clase =</span> clase),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">l2 =</span> <span class="fu">bind_cols</span>(<span class="fu">l2</span>(datos.numericos), <span class="at">clase =</span> clase),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">media =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max.mean</span>(datos.numericos), <span class="at">clase =</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                      clase),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediana =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max.median</span>(datos.numericos), <span class="at">clase =</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                        clase),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_max =</span> <span class="fu">bind_cols</span>(<span class="fu">min.max</span>(datos.numericos),</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">clase =</span> clase))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="descriptiva-gráfica" class="level2">
@@ -322,8 +323,12 @@ Using clase as id variables</code></pre>
 <h3 class="anchored" data-anchor-id="partición-de-datos">Partición de datos</h3>
 <p>NOTA: PODEMOS CREAR LA PARTICIÓN CON <code>caret</code> o a mano, el 70 porciento de los datos. A mano sería</p>
 </section>
-<section id="regresión-logística" class="level3">
-<h3 class="anchored" data-anchor-id="regresión-logística">Regresión logística</h3>
+</section>
+</section>
+<section id="métodos-de-clasificación-1" class="level1">
+<h1>Métodos de clasificación</h1>
+<section id="regresión-logística-lineal" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-logística-lineal"><strong>Regresión Logística Lineal</strong></h3>
 <p>alpha=1 es lasso y 0 es ridge</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Semilla</span></span>
@@ -342,8 +347,8 @@ Using clase as id variables</code></pre>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#REGRESION LOGISTICA LINEAL</span></span>
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>myfnlog <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"multinom"</span>, <span class="at">trControl =</span> trControl, <span class="at">trace =</span> F)</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,myfnlog)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>mifuncionlogistica <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"multinom"</span>, <span class="at">trControl =</span> trControl, <span class="at">trace =</span> F)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,mifuncionlogistica)</span>
 <span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>logisita.pred <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
 <span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
 <span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  logisita.pred[[l]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistica.lista[[l]],test[[l]])</span>
@@ -354,19 +359,23 @@ Using clase as id variables</code></pre>
 <span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
 <span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>accuracy_logis<span class="ot">&lt;-</span>accuracy</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_logis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>accuracy_metodologis<span class="ot">&lt;-</span>accuracy</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_metodologis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5919283 0.5964126 0.5919283 0.5941704 0.5919283 </code></pre>
 </div>
 </div>
+</section>
+<section id="ridge" class="level3">
+<h3 class="anchored" data-anchor-id="ridge"><strong>RIDGE</strong></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RIDGE</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>myfnridge <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,myfnridge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>mifuncionridge <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,mifuncionridge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in lognet(xd, is.sparse, ix, jx, y, weights, offset, alpha, nobs, : one
 multinomial or binomial class has fewer than 8 observations; dangerous ground
@@ -576,19 +585,22 @@ multinomial or binomial class has fewer than 8 observations; dangerous ground</c
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>accuracy_ridge <span class="ot">&lt;-</span> accuracy</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_ridge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>accuracy_metodoridge <span class="ot">&lt;-</span> accuracy</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_metodoridge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5941704 0.5941704 0.5941704 0.5941704 0.5941704 </code></pre>
 </div>
 </div>
+</section>
+<section id="lasso" class="level3">
+<h3 class="anchored" data-anchor-id="lasso"><strong>LASSO</strong></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#LASSO</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>myfnlasso <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">1</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mifuncionlasso <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"glmnet"</span>, <span class="at">trControl =</span> trControl,<span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha=</span><span class="dv">1</span>,<span class="at">lambda=</span>lambda_seq), <span class="at">trace =</span> F)</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,myfnlasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,mifuncionlasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in lognet(xd, is.sparse, ix, jx, y, weights, offset, alpha, nobs, : one
 multinomial or binomial class has fewer than 8 observations; dangerous ground
@@ -798,20 +810,120 @@ multinomial or binomial class has fewer than 8 observations; dangerous ground</c
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>accuracy_lasso <span class="ot">&lt;-</span> accuracy</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_lasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>accuracy_metodolasso <span class="ot">&lt;-</span> accuracy</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_metodolasso)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      raw    zscore        l2     media   mediana   min_max 
 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283 </code></pre>
 </div>
 </div>
+</section>
+<section id="knn" class="level3">
+<h3 class="anchored" data-anchor-id="knn"><strong>KNN</strong></h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KNN</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KNN</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>mifuncionknn <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"knn"</span>, <span class="at">trControl =</span> trControl, <span class="at">tuneLength =</span> <span class="dv">20</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,mifuncionknn)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>logisita.pred <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>( datos.lista)){</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  logisita.pred[[l]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistica.lista[[l]],test[[l]])</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(logisita.pred) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>accuracy_metodoknn <span class="ot">&lt;-</span> accuracy</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_metodoknn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      raw    zscore        l2     media   mediana   min_max 
+0.5852018 0.5717489 0.5986547 0.5941704 0.5874439 0.6031390 </code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BAYES</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="bayes" class="level3">
+<h3 class="anchored" data-anchor-id="bayes"><strong>BAYES</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BAYES</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>mifuncionbayes <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">train</span>(clase <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">"naive_bayes"</span>, <span class="at">trControl =</span> trControl, <span class="at">tuneLength =</span> <span class="dv">20</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>logistica.lista <span class="ot">&lt;-</span> <span class="fu">lapply</span>(entrenamiento,mifuncionbayes)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>logisita.pred <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>( datos.lista)){</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  logisita.pred[[l]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistica.lista[[l]],test[[l]])</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(logisita.pred) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>,<span class="at">length =</span> <span class="fu">length</span>(datos.lista))</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos.lista)){</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  accuracy[l] <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(test<span class="sc">$</span>raw<span class="sc">$</span>clase,logisita.pred[[l]])<span class="sc">$</span>overall[<span class="dv">1</span>]</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(accuracy) <span class="ot">&lt;-</span> <span class="fu">names</span>(datos.lista)</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>accuracy_metodobayes <span class="ot">&lt;-</span> accuracy</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(accuracy_metodobayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      raw    zscore        l2     media   mediana   min_max 
+0.4080717 0.5336323 0.4596413 0.5336323 0.4125561 0.4125561 </code></pre>
+</div>
+</div>
+</section>
+<section id="matriz-accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="matriz-accuracy"><strong>MATRIZ ACCURACY</strong></h3>
+<p>En la siguiente matriz se evaluará la precisión de los diferentes métodos de clasificación (REGRESION LOGISTICA LINEAL, RIDGE, LASSO, KNN, BAYES)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear la matriz de 5x6</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>matriz <span class="ot">&lt;-</span> <span class="fu">rbind</span>(accuracy_metodologis, accuracy_metodoridge, accuracy_metodolasso, accuracy_metodoknn, accuracy_metodobayes)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(matriz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           raw    zscore        l2     media   mediana
+accuracy_metodologis 0.5919283 0.5919283 0.5964126 0.5919283 0.5941704
+accuracy_metodoridge 0.5919283 0.5941704 0.5941704 0.5941704 0.5941704
+accuracy_metodolasso 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283
+accuracy_metodoknn   0.5852018 0.5717489 0.5986547 0.5941704 0.5874439
+accuracy_metodobayes 0.4080717 0.5336323 0.4596413 0.5336323 0.4125561
+                       min_max
+accuracy_metodologis 0.5919283
+accuracy_metodoridge 0.5941704
+accuracy_metodolasso 0.5919283
+accuracy_metodoknn   0.6031390
+accuracy_metodobayes 0.4125561</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quitamos la primera columna </span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>matrizmodificada <span class="ot">&lt;-</span> matriz[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir la variable matrizmodificada modificada, obteniendo una matriz de (5x5)</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(matrizmodificada)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        zscore        l2     media   mediana   min_max
+accuracy_metodologis 0.5919283 0.5964126 0.5919283 0.5941704 0.5919283
+accuracy_metodoridge 0.5941704 0.5941704 0.5941704 0.5941704 0.5941704
+accuracy_metodolasso 0.5919283 0.5919283 0.5919283 0.5919283 0.5919283
+accuracy_metodoknn   0.5717489 0.5986547 0.5941704 0.5874439 0.6031390
+accuracy_metodobayes 0.5336323 0.4596413 0.5336323 0.4125561 0.4125561</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener posición del valor mayor</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>posicion_max <span class="ot">&lt;-</span> <span class="fu">which.max</span>(matrizmodificada)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener dimensiones y nombres de fila y columna</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>dimensiones <span class="ot">&lt;-</span> <span class="fu">dim</span>(matrizmodificada)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>nombres_filas <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(matrizmodificada)[[<span class="dv">1</span>]]</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>nombres_columnas <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(matrizmodificada)[[<span class="dv">2</span>]]</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener fila y columna correspondiente al valor mayor</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>fila_max <span class="ot">&lt;-</span> nombres_filas[(posicion_max <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%%</span> dimensiones[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>columna_max <span class="ot">&lt;-</span> nombres_columnas[(posicion_max <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> dimensiones[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir el valor mayor y su posición</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"El valor de precisión más alto de todos los métodos es: "</span>, matrizmodificada[posicion_max], <span class="st">", obtenido con el método ("</span>, fila_max, <span class="st">", con la aplicacion de la transformación:,"</span>, columna_max, <span class="st">")"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>El valor de precisión más alto de todos los métodos es:  0.603139 , obtenido con el método ( accuracy_metodoknn , con la aplicacion de la transformación:, min_max )</code></pre>
+</div>
+</div>
 </section>
 </section>
 

@@ -48,6 +48,7 @@ datos <- as.data.frame(datos)
 datos.numericos <- datos[, which(unlist(lapply(datos, is.numeric)))]
 clase <- datos$V10 <- as.factor(datos$V10)
 colnames(datos.numericos) <- paste0("Var", rep(1:8))
+
 ### procedemos a crear una lista con todas las transformaciones
 
 datos.lista <- list(
@@ -140,7 +141,9 @@ corrplot::corrplot(cor(datos.lista$media[,-ncol(datos)]))
 
 NOTA: PODEMOS CREAR LA PARTICIÓN CON `caret` o a mano, el 70 porciento de los datos. A mano sería
 
-### Regresión logística
+# Métodos de clasificación
+
+### **Regresión Logística Lineal**
 
 alpha=1 es lasso y 0 es ridge
 
@@ -161,8 +164,8 @@ test <- lapply(datos.lista, function(x) x[-idx,])
 #REGRESION LOGISTICA LINEAL
 
 set.seed(123456789)
-myfnlog <- function(x) train(clase ~ ., data = x, method = "multinom", trControl = trControl, trace = F)
-logistica.lista <- lapply(entrenamiento,myfnlog)
+mifuncionlogistica <- function(x) train(clase ~ ., data = x, method = "multinom", trControl = trControl, trace = F)
+logistica.lista <- lapply(entrenamiento,mifuncionlogistica)
 logisita.pred <- vector("list",length = length(datos.lista))
 for(l in 1:length(datos.lista)){
   logisita.pred[[l]] <- predict(logistica.lista[[l]],test[[l]])
@@ -173,18 +176,21 @@ for(l in 1:length(datos.lista)){
   accuracy[l] <- confusionMatrix(test$raw$clase,logisita.pred[[l]])$overall[1]
 }
 names(accuracy) <- names(datos.lista)
-accuracy_logis<-accuracy
-print(accuracy_logis)
+accuracy_metodologis<-accuracy
+print(accuracy_metodologis)
 
 
 ```
 
+### **RIDGE**
+
 ```{r}
 #RIDGE
-set.seed(123456789)
-myfnridge <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=0,lambda=lambda_seq), trace = F)
 
-logistica.lista <- lapply(entrenamiento,myfnridge)
+set.seed(123456789)
+mifuncionridge <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=0,lambda=lambda_seq), trace = F)
+
+logistica.lista <- lapply(entrenamiento,mifuncionridge)
 logisita.pred <- vector("list",length = length(datos.lista))
 for(l in 1:length( datos.lista)){
   logisita.pred[[l]] <- predict(logistica.lista[[l]],test[[l]])
@@ -195,18 +201,20 @@ for(l in 1:length(datos.lista)){
   accuracy[l] <- confusionMatrix(test$raw$clase,logisita.pred[[l]])$overall[1]
 }
 names(accuracy) <- names(datos.lista)
-accuracy_ridge <- accuracy
-print(accuracy_ridge)
+accuracy_metodoridge <- accuracy
+print(accuracy_metodoridge)
 
 
 ```
+
+### **LASSO**
 
 ```{r}
 #LASSO
 set.seed(123456789)
-myfnlasso <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=1,lambda=lambda_seq), trace = F)
+mifuncionlasso <- function(x) train(clase ~ ., data = x, method = "glmnet", trControl = trControl,tuneGrid = expand.grid(alpha=1,lambda=lambda_seq), trace = F)
 
-logistica.lista <- lapply(entrenamiento,myfnlasso)
+logistica.lista <- lapply(entrenamiento,mifuncionlasso)
 logisita.pred <- vector("list",length = length(datos.lista))
 for(l in 1:length( datos.lista)){
   logisita.pred[[l]] <- predict(logistica.lista[[l]],test[[l]])
@@ -217,19 +225,93 @@ for(l in 1:length(datos.lista)){
   accuracy[l] <- confusionMatrix(test$raw$clase,logisita.pred[[l]])$overall[1]
 }
 names(accuracy) <- names(datos.lista)
-accuracy_lasso <- accuracy
-print(accuracy_lasso)
+accuracy_metodolasso <- accuracy
+print(accuracy_metodolasso)
 
 ```
+
+### **KNN**
 
 ```{r}
 #KNN
 
+set.seed(123456789)
+mifuncionknn <- function(x) train(clase ~ ., data = x, method = "knn", trControl = trControl, tuneLength = 20)
+
+logistica.lista <- lapply(entrenamiento,mifuncionknn)
+logisita.pred <- vector("list",length = length(datos.lista))
+for(l in 1:length( datos.lista)){
+  logisita.pred[[l]] <- predict(logistica.lista[[l]],test[[l]])
+}
+names(logisita.pred) <- names(datos.lista)
+accuracy <- vector("numeric",length = length(datos.lista))
+for(l in 1:length(datos.lista)){
+  accuracy[l] <- confusionMatrix(test$raw$clase,logisita.pred[[l]])$overall[1]
+}
+names(accuracy) <- names(datos.lista)
+accuracy_metodoknn <- accuracy
+print(accuracy_metodoknn)
+
+```
+
+### **BAYES**
+
+```{r}
+#BAYES
+set.seed(123456789)
+mifuncionbayes <- function(x) train(clase ~ ., data = x, method = "naive_bayes", trControl = trControl, tuneLength = 20)
+
+logistica.lista <- lapply(entrenamiento,mifuncionbayes)
+logisita.pred <- vector("list",length = length(datos.lista))
+for(l in 1:length( datos.lista)){
+  logisita.pred[[l]] <- predict(logistica.lista[[l]],test[[l]])
+}
+names(logisita.pred) <- names(datos.lista)
+accuracy <- vector("numeric",length = length(datos.lista))
+for(l in 1:length(datos.lista)){
+  accuracy[l] <- confusionMatrix(test$raw$clase,logisita.pred[[l]])$overall[1]
+}
+names(accuracy) <- names(datos.lista)
+accuracy_metodobayes <- accuracy
+print(accuracy_metodobayes)
+```
+
+### **MATRIZ ACCURACY**
+
+En la siguiente matriz se evaluará la precisión de los diferentes métodos de clasificación (REGRESION LOGISTICA LINEAL, RIDGE, LASSO, KNN, BAYES)
+
+```{r}
+
+# Crear la matriz de 5x6
+matriz <- rbind(accuracy_metodologis, accuracy_metodoridge, accuracy_metodolasso, accuracy_metodoknn, accuracy_metodobayes)
+print(matriz)
+
+# quitamos la primera columna 
+matrizmodificada <- matriz[, -1]
+# Imprimir la variable matrizmodificada modificada, obteniendo una matriz de (5x5)
+print(matrizmodificada)
+
+
+# Obtener posición del valor mayor
+posicion_max <- which.max(matrizmodificada)
+
+# Obtener dimensiones y nombres de fila y columna
+dimensiones <- dim(matrizmodificada)
+nombres_filas <- dimnames(matrizmodificada)[[1]]
+nombres_columnas <- dimnames(matrizmodificada)[[2]]
+
+# Obtener fila y columna correspondiente al valor mayor
+fila_max <- nombres_filas[(posicion_max - 1) %% dimensiones[1] + 1]
+columna_max <- nombres_columnas[(posicion_max - 1) %/% dimensiones[1] + 1]
+
 
 
 ```
 
 ```{r}
-#BAYES
+# Imprimir el valor mayor y su posición
+
+cat("El valor de precisión más alto de todos los métodos es: ", matrizmodificada[posicion_max], ", obtenido con el método (", fila_max, ", con la aplicacion de la transformación:,", columna_max, ")")
+
 
 ```
