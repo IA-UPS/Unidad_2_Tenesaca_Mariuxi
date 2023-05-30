@@ -1,0 +1,234 @@
+---
+title: "Análisis de un conjunto de datos"
+format: html
+editor: visual
+author: "Mariuxi Maribel Tenesaca Yuqui"
+---
+
+**Información del conjunto de datos:**
+
+Las imágenes de las variedades de pasas Kecimen y Besni cultivadas en Turquía se obtuvieron con CVS. Se utilizaron un total de 900 granos de pasas, incluyendo 450 piezas de ambas variedades. Estas imágenes fueron sometidas a diversas etapas de pre-procesamiento y se extrajeron 7 características morfológicas.
+
+**Información de atributos:**
+
+Área: Da el número de píxeles dentro de los límites de la pasa.\
+Perímetro: Mide el entorno calculando la distancia entre los límites de la pasa y los píxeles que la rodean.\
+MajorAxisLength: Da la longitud del eje principal, que es la línea más larga que se puede dibujar en la pasa.\
+MinorAxisLength: Da la longitud del eje pequeño, que es la línea más corta que se puede dibujar en la pasa.\
+Excentricidad: Da una medida de la excentricidad de la elipse, que tiene los mismos momentos que las pasas.\
+Área convexa: Da el número de píxeles de la cáscara convexa más pequeña de la región formada por la pasa.\
+Extensión: Da la relación entre la región formada por la pasa y el total de píxeles en el cuadro delimitador.\
+Clase: Kecimen y pasas Besni.
+
+**1.Realizar un análisis estadístico descriptivo e inferencial, del conjunto de datos que guistéis de la página**
+
+<https://archive.ics.uci.edu/ml/index.php>
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(ggstatsplot)
+```
+
+-   **Los datos con los que se trabajara son variedades de pasas Kecimen y Besni cultivadas en Turquía**
+
+    ```{r}
+    # Cargar el conjunto de datos desde el archivo "Raisin_Dataset.csv"
+    dattos<- read.csv("Raisin_Dataset.csv")
+
+    head(dattos)
+
+    # Imprimir los nombres de las columnas disponibles para poder verificar el nombre de las variables.
+    print(colnames(dattos))
+
+    ```
+
+```{r}
+# Muestra la estructura de los datos y el tipo de cada variable
+str(dattos) 
+#el número de filas y columnas en un conjunto de datos
+dim(dattos)
+```
+
+**Tenemos 900 filas y 8 columnas**
+
+***La función as.factor() sirve para convertir la variable "diagnostico" en un factor.***
+
+```{r}
+dattos$Class  <- as.factor(dattos$Class)
+```
+
+**Calcular estadísticos descriptivos numéricos**
+
+```{r}
+# Cargar el conjunto de datos desde el archivo "cancer.csv"
+datos <- read.csv("Raisin_Dataset.csv")
+
+# Seleccionar las columnas de interés
+subset_datos <- datos[, -ncol(datos)]  # Excluir la última columna
+
+# Calcular estadísticos descriptivos numéricos
+stats <- data.frame(
+  Media = colMeans(subset_datos),
+  Mediana = apply(subset_datos, 2, median),
+  DesviacionEstandar = apply(subset_datos, 2, sd),
+  ValorMinimo = apply(subset_datos, 2, min),
+  ValorMaximo = apply(subset_datos, 2, max)
+)
+
+# Mostrar los estadísticos descriptivos
+print(stats)
+
+```
+
+**Existe otra opción para mostrar una estadística descriptiva de los datos y es:**
+
+*La función summary() que mostrará estadísticas como:*
+
+-   *El mínimo, el primer cuartil, la mediana, el tercer cuartil y el máximo para cada variable numérica en el conjunto de datos.*
+
+*Esto nos dará una visión general de la distribución y los valores extremos de cada variable*
+
+```{r}
+# Estadísticas descriptivas de las variables
+summary(dattos$Area)
+summary(dattos$MajorAxisLength)
+summary(dattos$MinorAxisLength)
+summary(dattos$Eccentricity)
+summary(dattos$ConvexArea)
+summary(dattos$Extent)
+summary(dattos$Perimeter)
+
+# Distribución de las variables categóricas
+table(dattos$Class)  
+prop.table(table(dattos$Class)) 
+
+```
+
+**Histogramas**
+
+Cada gráfico muestra el histograma de los valores de una columna particular, con el color de relleno del histograma basado en la columna Class.
+
+```{r}
+#Esta variablecontine todas las variable excepto la última que es Class que se anteriormente la convertimos en Factor.
+
+-ncol(dattos)
+```
+
+```{r}
+l.plots <- vector("list",length = ncol(dattos)-1)
+n1 <- ncol(dattos) -1
+for(j in 1:n1){
+  
+  h <-hist(dattos[,j],plot = F)
+  dattos.tmp <- data.frame(value=dattos[,j],Class=dattos$Class)
+  p1 <- ggplot(dattos.tmp,aes(value,fill=Class))+geom_histogram(breaks=h$breaks) + ggtitle(paste("Histogram of", colnames(dattos)[j]))
+  
+  l.plots[[j]] <- p1
+}
+
+```
+
+***Esta línea de código muestra los histogramas generados anteriormente. Ejecutarlo imprime una lista de histogramas l.plots para cada variable.***
+
+```{r}
+l.plots
+```
+
+**Calculos de correlacion**
+
+```{r}
+
+# Calcular la matriz de correlación
+
+matriz_cor <- cor(dattos[, c("Area", "MajorAxisLength", "MinorAxisLength", "Eccentricity", "ConvexArea", "Extent", "Perimeter")])
+
+# Realizar pruebas de correlación 
+
+for (i in 1:(ncol(matriz_cor)-1)) {
+  for (j in (i+1):ncol(matriz_cor)) {
+    cor_test <- cor.test(dattos[, i], dattos[, j])
+    print(paste("Correlación entre", colnames(dattos)[i], "y", colnames(dattos)[j]))
+    
+    # Mostrar correlación
+    print(cor_test$estimate)  
+    print("____________________")
+  }
+}
+
+```
+
+**Se muestra el resultado en una matriz de correlación con la función corrplot::corrplot().**
+
+```{r}
+
+obj.cor <- psych::corr.test(dattos[,1:7])
+p.values <- obj.cor$p
+p.values[upper.tri(p.values)] <- obj.cor$p.adj
+p.values[lower.tri(p.values)] <- obj.cor$p.adj
+diag(p.values) <- 1
+corrplot::corrplot(corr = obj.cor$r,p.mat = p.values,sig.level = 0.05,insig = "label_sig")
+```
+
+**PCA**
+
+```{r}
+
+dattos_escalado <- dattos[, -ncol(dattos)]  # Excluir la última columna
+class<- dattos$Class
+
+dattos_escalado <- scale(dattos_escalado)
+
+#Calcular PCA
+pca_resultado <- prcomp(dattos_escalado, scale. = FALSE)
+
+# Biplot
+biplot(pca_resultado, main = "Grafico Biplot")
+
+# Los diagnósticos De M y B que sw encuentran en la variable dattos_escalado
+
+points(pca_resultado$x[class== "Kecimen", 1], pca_resultado$x[class == "Kecimen", 2], col = "green")
+points(pca_resultado$x[class== "Besni", 1], pca_resultado$x[class == "Besni", 2], col = "hotpink")
+
+# Para identificar Kecimen Y Besni segun sus colores, en este caso tenemos Kecimen de verde y Besni de rosado
+legend("bottomright", legend = c("Kecimen", "Besni"), col = c("green", "hotpink"), pch = 1, title = "Class", cex = 0.7)
+
+summary(pca_resultado)
+```
+
+**Puede ser de regresión o de clasificación**
+
+```{r}
+set.seed(123)
+# Leer el conjunto de datos
+dattos <- read.csv("Raisin_Dataset.csv")
+
+# Convertir la última variable en un factor
+dattos$Class <- as.factor(dattos$Class)
+levels(dattos$Class) <- c("D","N")
+# Escalar las variables predictoras
+dattos[, 1:7] <- as.data.frame(scale(dattos[, -ncol(dattos)]))
+
+# Dividir los datos en conjunto de entrenamiento y conjunto de prueba
+train_index <- caret::createDataPartition(dattos$Class, p = 0.8, list = FALSE)
+train_data <- dattos[train_index, ]
+test_data <- dattos[-train_index, ]
+
+# Ajustar un modelo de regresión logística
+glm_mod <- glm(Class ~ ., data = train_data, family = "binomial")
+
+# Realizar predicciones en el conjunto de prueba
+predictions <- as.factor(ifelse(predict(glm_mod, newdata = test_data, type = "response") >= 0.5, "N", "D"))
+
+# Evaluar el rendimiento del modelo en el conjunto de prueba
+caret::confusionMatrix(predictions, test_data$Class)
+
+```
+
+Evaluación del modelo de regresión logística en el conjunto de datos de pasas.
+
+La precisión del modelo es del 88.33% esto quiere decir que el modelo tiene un buen rendimiento,
+
+La sensibilidad del modelo, que es la proporción de verdaderos positivos, es del 85.56%.
+
+La especificidad del modelo, que es la proporción de verdaderos negativos, es del 91.11%.
